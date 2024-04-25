@@ -47,7 +47,8 @@ VALIDATE $? "Removing the Default content in the Nginx"
 curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOGFILE
 VALIDATE $? "Downloading the Frontend code"
 
-cd /usr/share/nginx/html
+cd /usr/share/nginx/html &>>$LOGFILE
+unzip /tmp/frontend.zip &>>$LOGFILE
 VALIDATE $? "Unzipping the Frontend Code"
 
 cp /root/Expense-shell/expense.conf /etc/nginx/default.d/expense.conf &>>$LOGFILE
