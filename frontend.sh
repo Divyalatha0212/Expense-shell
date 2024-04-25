@@ -32,14 +32,14 @@ fi
 dnf install nginx -y &>>$LOGFILE
 VALIDATE $? "Installing Nginx"
 
-systemctl start nginx &>>$LOGFILE
-VALIDATE $? "Starting the Nginx"
-
 systemctl enable nginx &>>$LOGFILE
 VALIDATE $? "Enabling the Nginx"
 
-systemctl restart backend &>>$LOGFILE
-VALIDATE $? "Restarting the Backend"
+
+systemctl start nginx &>>$LOGFILE
+VALIDATE $? "Starting the Nginx"
+
+
 
 rm -rf /usr/share/nginx/html/*
 VALIDATE $? "Removing the Default content in the Nginx"
