@@ -21,7 +21,8 @@ VALIDATE(){
         echo -e "$2...$G SUCCESS $N"
     fi
 }
-if [ $USERID -ne 0]
+
+if [ $USERID -ne 0 ]
 then
 
     echo "Please run this script with root access."
@@ -51,6 +52,7 @@ if [ $? -ne 0 ]
 then
 mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOGFILE
 VALIDATE $? "Setting the root Password for Mysql"
+
 else
 echo -e "Mysql Password Already Setup...$Y SKIPPING $N"
 fi
