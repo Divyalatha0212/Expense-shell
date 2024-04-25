@@ -47,7 +47,7 @@ then
 useradd expense &>>$LOGFILE
 VALIDATE $? "Creating expense user"
 else
-echo -e "expense user already created...$Y SKIPPIN $N"
+echo -e "Expense user already created...$Y SKIPPING $N"
 fi
 
 mkdir -p /app &>>$LOGFILE
@@ -57,6 +57,7 @@ curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expen
 VALIDATE $? "Downloading the backend code"
 
 cd /app &>>$LOGFILE
+rm -rf /app/*
 VALIDATE $? "Changing the Directory"
 
 unzip /tmp/backend.zip &>>$LOGFILE
@@ -76,13 +77,13 @@ systemctl daemon-reload &>>$LOGFILE
 VALIDATE $? "Reloading the Backend Service"
 
 systemctl start backend &>>$LOGFILE
-VALIDATE $? "start the Backend Service"
+VALIDATE $? "Start the Backend Service"
 
 systemctl enable backend &>>$LOGFILE
-VALIDATE $? "enabling the Backend Service"
+VALIDATE $? "Enabling the Backend Service"
 
 dnf install mysql -y &>>$LOGFILE
-VALIDATE $? "installing the MYSQL Client"
+VALIDATE $? "Installing the MYSQL Client"
 
 mysql -h db.asadi-devops.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOGFILE
 VALIDATE $? "Load the Schema"
