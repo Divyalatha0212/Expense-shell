@@ -30,14 +30,34 @@ else
 fi
 
 
-dnf module disable nodejs -y &>>LOGFILE
+dnf module disable nodejs -y &>>L$OGFILE
 VALIDATE $? "Disabling default nodejs"
 
-dnf module enable nodejs:20 -y &>>LOGFILE
+dnf module enable nodejs:20 -y &>>$LOGFILE
 VALIDATE $? "Enabling nodejs:20 version"
 
-dnf module install nodejs -y &>>LOGFILE
+dnf module install nodejs -y &>>$LOGFILE
 VALIDATE $? "Installing nodejs"
 
-useradd expense
-VALIDATE $? "Adding User"
+
+
+id expense &>>$LOGFILE
+if [ $? -ne 0 ]
+then 
+useradd expense &>>$LOGFILE
+VALIDATE $? "Creating expense user"
+else
+echo "expense user already created...$Y SKIPPIN $N"
+
+
+
+
+
+
+
+
+
+
+
+
+
