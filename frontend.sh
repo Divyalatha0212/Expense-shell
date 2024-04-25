@@ -10,7 +10,7 @@ Y="\e[33m"
 N="\e[0m"
 
 
-if [ $USERID -NE 0 ]
+if [ $USERID -ne 0 ]
 then
 echo " Run this script with root user"
 exit 1
@@ -21,10 +21,10 @@ fi
 VALIDATE(){
 if [ $? -ne 0 ]
 then
-echo "$2...$R FAILURE $N"
+echo -e "$2...$R FAILURE $N"
 exit 1
 else
-echo "s2...$G SUCESS $N"
+echo -e "s2...$G SUCESS $N"
 fi
 
 }
