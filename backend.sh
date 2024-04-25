@@ -49,3 +49,61 @@ VALIDATE $? "Creating expense user"
 else
 echo -e "expense user already created...$Y SKIPPIN $N"
 fi
+
+mkdir -p /app &>>$LOGFILE
+VALIDATE $? "Creating the Directory"
+
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+VALIDATE $? "Downloading the backend code"
+
+cd /app &>>$LOGFILE
+VALIDATE $? "Changing the Directory"
+
+unzip /tmp/backend.zip &>>$LOGFILE
+VALIDATE $? "Unziping the backned code"
+
+npm install &>>$LOGFILE
+VALIDATE $? "Installing the  nodejs Dependencies"
+
+
+#because we are perform all our  operations from the EC2 server. So you specify the absolute path of the file
+#Also the file should be present at that location
+
+cp /root/Expense-shell/backend.service /etc/systemd/system/backend.service
+VALIDATE $? "Copied Backend Service"
+
+systemctl daemon-reload &>>$LOGFILE
+VALIDATE $? "Reloading the Backend Service"
+
+systemctl start backend &>>$LOGFILE
+VALIDATE $? "start the Backend Service"
+
+systemctl enable backend &>>$LOGFILE
+VALIDATE $? "enabling the Backend Service"
+
+dnf install mysql -y &>>$LOGFILE
+VALIDATE $? "installing the MYSQL Client"
+
+mysql -h db.asadi-devops.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOGFILE
+VALIDATE $? "Load the Schema"
+
+systemctl restart backend &>>$LOGFILE
+VALIDATE $? "Restarting the Backend"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
