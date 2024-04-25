@@ -38,7 +38,23 @@ VALIDATE $? "Starting the Nginx"
 systemctl enable nginx &>>$LOGFILE
 VALIDATE $? "Enabling the Nginx"
 
+systemctl restart backend &>>$LOGFILE
+VALIDATE $? "Restarting the Backend"
 
+rm -rf /usr/share/nginx/html/*
+VALIDATE $? "Removing the Default content in the Nginx"
+
+curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOGFILE
+VALIDATE $? "Downloading the Frontend code"
+
+cd /usr/share/nginx/html
+VALIDATE $? "Unzipping the Frontend Code"
+
+cp /root/Expense-shell/expense.conf /etc/nginx/default.d/expense.conf &>>$LOGFILE
+VALIDATE $? "Copying expense conf"
+
+systemctl restatrt nginx &>>$LOGFILE
+VALIDATE $? "Restart the Nginx"
 
 
 
