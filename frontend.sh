@@ -53,7 +53,7 @@ VALIDATE $? "Unzipping the Frontend Code"
 cp /root/Expense-shell/expense.conf /etc/nginx/default.d/expense.conf &>>$LOGFILE
 VALIDATE $? "Copying expense conf"
 
-systemctl restatrt nginx &>>$LOGFILE
+systemctl restart nginx &>>$LOGFILE
 VALIDATE $? "Restart the Nginx"
 
 
