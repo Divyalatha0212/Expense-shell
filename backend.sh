@@ -10,7 +10,7 @@ Y="\e[33m"
 N="\e[0m"
 
 echo "Please Enter the DB Password:"
-read -s mysql_root-password
+read mysql_root_password
 
 VALIDATE(){
    if [ $1 -ne 0 ]
