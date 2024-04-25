@@ -87,11 +87,9 @@ VALIDATE $? "Enabling the Backend Service"
 dnf install mysql -y &>>$LOGFILE
 VALIDATE $? "Installing the MYSQL Client"
 
-mysql -h db.asadi-devops.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOGFILE
+mysql -h db.asadi-devops.online -uroot -p${ExpenseApp@1} < /app/schema/backend.sql &>>$LOGFILE
 VALIDATE $? "Load the Schema"
 
-systemctl restart backend &>>$LOGFILE
-VALIDATE $? "Restarting the Backend"
 
 
 

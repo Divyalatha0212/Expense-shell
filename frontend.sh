@@ -30,32 +30,58 @@ fi
 }
 
 dnf install nginx -y &>>$LOGFILE
-VALIDATE $? "Installing Nginx"
+VALIDATE $? "Installing nginx"
 
 systemctl enable nginx &>>$LOGFILE
-VALIDATE $? "Enabling the Nginx"
-
+VALIDATE $? "Enabling nginx"
 
 systemctl start nginx &>>$LOGFILE
-VALIDATE $? "Starting the Nginx"
+VALIDATE $? "Starting nginx"
 
-
-
-rm -rf /usr/share/nginx/html/*
-VALIDATE $? "Removing the Default content in the Nginx"
+rm -rf /usr/share/nginx/html/* &>>$LOGFILE
+VALIDATE $? "Removing existing content"
 
 curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOGFILE
-VALIDATE $? "Downloading the Frontend code"
+VALIDATE $? "Downloading frontend code"
 
 cd /usr/share/nginx/html &>>$LOGFILE
 unzip /tmp/frontend.zip &>>$LOGFILE
-VALIDATE $? "Unzipping the Frontend Code"
+VALIDATE $? "Extracting frontend code"
 
+#check your repo and path
 cp /root/Expense-shell/expense.conf /etc/nginx/default.d/expense.conf &>>$LOGFILE
-VALIDATE $? "Copying expense conf"
+VALIDATE $? "Copied expense conf"
 
 systemctl restart nginx &>>$LOGFILE
-VALIDATE $? "Restart the Nginx"
+VALIDATE $? "Restarting nginx"
+
+# dnf install nginx -y &>>$LOGFILE
+# VALIDATE $? "Installing Nginx"
+
+# systemctl enable nginx &>>$LOGFILE
+# VALIDATE $? "Enabling the Nginx"
+
+
+# systemctl start nginx &>>$LOGFILE
+# VALIDATE $? "Starting the Nginx"
+
+
+
+# rm -rf /usr/share/nginx/html/*
+# VALIDATE $? "Removing the Default content in the Nginx"
+
+# curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOGFILE
+# VALIDATE $? "Downloading the Frontend code"
+
+# cd /usr/share/nginx/html &>>$LOGFILE
+# unzip /tmp/frontend.zip &>>$LOGFILE
+# VALIDATE $? "Unzipping the Frontend Code"
+
+# cp /root/Expense-shell/expense.conf /etc/nginx/default.d/expense.conf &>>$LOGFILE
+# VALIDATE $? "Copying expense conf"
+
+# systemctl restart nginx &>>$LOGFILE
+# VALIDATE $? "Restart the Nginx"
 
 
 
